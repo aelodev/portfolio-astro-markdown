@@ -1,5 +1,5 @@
 ---
-import Header from "../layouts/Header.astro";
+import "./src/styles/global.css";
 ---
 
 <html lang="en">
@@ -10,7 +10,7 @@ import Header from "../layouts/Header.astro";
         <meta name="generator" content={Astro.generator} />
         <title>Astro</title>
     </head>
-    <body>
-        <Header />
+    <body class="mx-100">
+        <h1 class="bg-red-400">Astro</h1>
     </body>
 </html>
