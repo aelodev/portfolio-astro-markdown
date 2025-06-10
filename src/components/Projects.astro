@@ -1,0 +1,85 @@
+---
+const projects = [
+  {
+    title: "E-commerce Platform",
+    description:
+      "A full-stack e-commerce solution built with Next.js, Stripe, and PostgreSQL. Features include user authentication, product management, and order processing.",
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "Stripe"],
+    github: "https://github.com/johndoe/ecommerce",
+    demo: "https://ecommerce-demo.vercel.app",
+    status: "Production",
+  },
+  {
+    title: "Task Management App",
+    description:
+      "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+    tech: ["React", "Node.js", "Socket.io", "MongoDB"],
+    github: "https://github.com/johndoe/taskapp",
+    demo: "https://taskapp-demo.netlify.app",
+    status: "Beta",
+  },
+  {
+    title: "Weather Dashboard",
+    description:
+      "A responsive weather dashboard that displays current conditions and forecasts using OpenWeatherMap API with beautiful data visualizations.",
+    tech: ["Astro", "Chart.js", "Tailwind CSS"],
+    github: "https://github.com/johndoe/weather",
+    demo: "https://weather-dashboard-demo.vercel.app",
+    status: "Complete",
+  },
+];
+---
+
+<section id="projects" class="py-16">
+  <div class="prose prose-lg max-w-none mx-auto">
+    <h2 class="text-center">Projects</h2>
+
+    <p class="text-center">
+      Here are some of the projects I've been working on. Each one represents a
+      different challenge and learning opportunity.
+    </p>
+
+    <div class="space-y-8 not-prose max-w-4xl mx-auto">
+      {
+        projects.map((project) => (
+          <div class="border border-gray-700 rounded-lg p-6 bg-gray-800">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-xl font-semibold text-gray-200">
+                {project.title}
+              </h3>
+              <span class="text-xs px-2 py-1 bg-green-900 text-green-300 rounded-full">
+                {project.status}
+              </span>
+            </div>
+
+            <p class="text-gray-400 mb-4 text-center">{project.description}</p>
+
+            <div class="flex flex-wrap gap-2 mb-4 justify-center">
+              {project.tech.map((tech) => (
+                <code class="text-sm bg-gray-700 text-gray-300 px-2 py-1 rounded">
+                  {tech}
+                </code>
+              ))}
+            </div>
+
+            <div class="flex space-x-4 justify-center">
+              <a href={project.github} class="text-blue-400 hover:underline">
+                GitHub →
+              </a>
+              <a href={project.demo} class="text-blue-400 hover:underline">
+                Live Demo →
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <blockquote class="max-w-2xl mx-auto text-center">
+      <p>
+        "The best way to learn is by building. Each project teaches you
+        something new and pushes you to grow as a developer."
+      </p>
+    </blockquote>
+  </div>
+</section>
