@@ -1,5 +1,10 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "extends": "astro/tsconfigs/base",
+  "compilerOptions": {
+    // If you added anything here related to JSX before, consider removing it
+    // unless explicitly needed for a specific integration.
+    "jsx": "preserve" // Use "preserve" for Astro projects
+  },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"]
 }
