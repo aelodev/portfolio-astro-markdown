@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
@@ -8,117 +8,183 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Alejandro Lucena - Software Developer" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
-  </head>
-  <body class="bg-gray-900 text-gray-300 font-mono leading-relaxed">
-    <slot />
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="description"
+            content="Alejandro Lucena - Software Developer"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+        <!-- Preconnect to Google Fonts for faster loading -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <!-- Load fonts asynchronously to prevent render blocking -->
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap"
+            media="print"
+            onload="this.media='all'"
+        />
+        <noscript>
+            <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap"
+            />
+        </noscript>
+
+        <title>{title}</title>
+
+        <!-- Font loading optimization script -->
+        <script is:inline>
+            // Optimize font loading with FOUT (Flash of Unstyled Text) prevention
+            (function () {
+                if (sessionStorage.getItem("fontsLoaded")) {
+                    document.documentElement.classList.add("fonts-loaded");
+                } else {
+                    if (document.fonts && document.fonts.ready) {
+                        document.fonts.ready.then(function () {
+                            document.documentElement.classList.add(
+                                "fonts-loaded",
+                            );
+                            sessionStorage.setItem("fontsLoaded", "true");
+                        });
+                    } else {
+                        // Fallback for older browsers
+                        setTimeout(function () {
+                            document.documentElement.classList.add(
+                                "fonts-loaded",
+                            );
+                            sessionStorage.setItem("fontsLoaded", "true");
+                        }, 300);
+                    }
+                }
+            })();
+        </script>
+    </head>
+    <body class="bg-gray-900 text-gray-300 font-mono leading-relaxed">
+        <slot />
+    </body>
 </html>
 
 <style is:global>
-  @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap");
+    * {
+        box-sizing: border-box;
+    }
 
-  * {
-    box-sizing: border-box;
-  }
+    /* Font loading states for better perceived performance */
+    body {
+        font-family: "Courier New", "Monaco", "Menlo", "Consolas", monospace;
+        line-height: 1.7;
+        background-color: #1e1e1e;
+        color: #cfcfcf;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
 
-  body {
-    font-family: "JetBrains Mono", monospace;
-    line-height: 1.7;
-    background-color: #1e1e1e;
-    color: #cfcfcf;
-  }
+    /* Apply JetBrains Mono when fonts are loaded to prevent FOUT */
+    .fonts-loaded body,
+    .fonts-loaded h1,
+    .fonts-loaded h2,
+    .fonts-loaded h3,
+    .fonts-loaded h4,
+    .fonts-loaded h5,
+    .fonts-loaded h6,
+    .fonts-loaded code,
+    .fonts-loaded pre {
+        font-family:
+            "JetBrains Mono", "Courier New", "Monaco", "Menlo", "Consolas",
+            monospace;
+    }
 
-  /* Markdown-like styling */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: 600;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-    color: #f5f5f5;
-  }
+    /* Markdown-like styling */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+        color: #f5f5f5;
+    }
 
-  h1 {
-    font-size: 2.5rem;
-    border-bottom: 2px solid #e5e7eb;
-    padding-bottom: 0.5rem;
-  }
+    h1 {
+        font-size: 2.5rem;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 0.5rem;
+    }
 
-  h2 {
-    font-size: 2rem;
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 0.3rem;
-  }
+    h2 {
+        font-size: 2rem;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 0.3rem;
+    }
 
-  h3 {
-    font-size: 1.5rem;
-  }
+    h3 {
+        font-size: 1.5rem;
+    }
 
-  p {
-    margin-bottom: 1rem;
-  }
+    p {
+        margin-bottom: 1rem;
+    }
 
-  a {
-    color: #64b5f6;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
-  }
+    a {
+        color: #64b5f6;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+    }
 
-  a:hover {
-    border-bottom-color: #64b5f6;
-  }
+    a:hover {
+        border-bottom-color: #64b5f6;
+    }
 
-  code {
-    background-color: #1f1f1f;
-    color: #dcdcdc;
-    padding: 0.2rem 0.4rem;
-    border-radius: 0.25rem;
-    font-size: 0.9em;
-  }
+    code {
+        background-color: #1f1f1f;
+        color: #dcdcdc;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+    }
 
-  pre {
-    background-color: #2a2a2a;
-    color: #dcdcdc;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border-color: #333;
-    overflow-x: auto;
-    margin: 1rem 0;
-  }
+    pre {
+        background-color: #2a2a2a;
+        color: #dcdcdc;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border-color: #333;
+        overflow-x: auto;
+        margin: 1rem 0;
+    }
 
-  blockquote {
-    border-left: 4px solid #64b5f6;
-    padding-left: 1rem;
-    margin: 1rem 0;
-    font-style: italic;
-    color: #cfcfcf;
-    background-color: #1e1e1e;
-  }
+    blockquote {
+        border-left: 4px solid #64b5f6;
+        padding-left: 1rem;
+        margin: 1rem 0;
+        font-style: italic;
+        color: #cfcfcf;
+        background-color: #1e1e1e;
+    }
 
-  ul,
-  ol {
-    margin: 1rem 0;
-    padding-left: 2rem;
-  }
+    ul,
+    ol {
+        margin: 1rem 0;
+        padding-left: 2rem;
+    }
 
-  li {
-    margin-bottom: 0.5rem;
-  }
+    li {
+        margin-bottom: 0.5rem;
+    }
 
-  hr {
-    border: none;
-    border-top: 1px solid #e5e7eb;
-    margin: 2rem 0;
-  }
+    hr {
+        border: none;
+        border-top: 1px solid #e5e7eb;
+        margin: 2rem 0;
+    }
 </style>
