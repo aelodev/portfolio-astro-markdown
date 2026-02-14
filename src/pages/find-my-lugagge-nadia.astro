@@ -1,0 +1,161 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const ownerName = "Nadia Morillas Barrionuevo";
+const email = "n.barrionuevo706@gmail.com";
+const phoneDisplay = "+34 722 510 301";
+const phoneRaw = "34722510301";
+const whatsappMessage = encodeURIComponent(
+  "Hola, he encontrado tu equipaje. Escríbeme por aquí para devolvértelo.",
+);
+---
+
+<Layout title="Find My Luggage - Nadia Morillas Barrionuevo">
+  <main class="min-h-screen flex items-center justify-center px-6 py-10">
+    <section class="w-full max-w-2xl">
+      <div class="bg-gray-800 border border-gray-700 rounded-xl p-8 md:p-10">
+        <div class="flex justify-center gap-2 mb-6 not-prose">
+          <button
+            type="button"
+            data-lang-btn="es"
+            class="px-3 py-1 rounded-md border border-blue-500 text-blue-400 bg-gray-900 hover:bg-gray-700 transition-colors"
+          >
+            ES
+          </button>
+          <button
+            type="button"
+            data-lang-btn="en"
+            class="px-3 py-1 rounded-md border border-gray-600 text-gray-300 bg-gray-900 hover:bg-gray-700 transition-colors"
+          >
+            EN
+          </button>
+        </div>
+
+        <p
+          data-i18n="kicker"
+          class="text-blue-400 text-sm uppercase tracking-wider mb-3 text-center"
+        >
+          Find My Luggage
+        </p>
+        <h1 data-i18n="title" class="text-center mb-4">
+          Has encontrado algo mío
+        </h1>
+        <p data-i18n="intro" class="text-center text-gray-300 mb-8">
+          Gracias por escanear este QR. Si has encontrado mi equipaje u objeto
+          personal, por favor contacta conmigo usando cualquiera de estas
+          opciones:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose">
+          <a
+            href={`mailto:${email}`}
+            class="block bg-gray-700 hover:bg-gray-600 transition-colors rounded-lg p-4 text-center"
+          >
+            <p data-i18n="emailLabel" class="text-gray-200 font-semibold mb-1">
+              Correo
+            </p>
+            <p class="text-blue-400 break-all">{email}</p>
+          </a>
+
+          <a
+            href={`tel:${phoneRaw}`}
+            class="block bg-gray-700 hover:bg-gray-600 transition-colors rounded-lg p-4 text-center"
+          >
+            <p data-i18n="phoneLabel" class="text-gray-200 font-semibold mb-1">
+              Teléfono
+            </p>
+            <p class="text-blue-400">{phoneDisplay}</p>
+          </a>
+
+          <a
+            href={`https://wa.me/${phoneRaw}?text=${whatsappMessage}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block bg-gray-700 hover:bg-gray-600 transition-colors rounded-lg p-4 text-center"
+          >
+            <p class="text-gray-200 font-semibold mb-1">WhatsApp</p>
+            <p data-i18n="whatsappCta" class="text-blue-400">Enviar mensaje</p>
+          </a>
+
+          <a
+            href={`mailto:${email}?subject=He%20encontrado%20tu%20equipaje`}
+            class="block bg-gray-700 hover:bg-gray-600 transition-colors rounded-lg p-4 text-center"
+          >
+            <p data-i18n="gmailLabel" class="text-gray-200 font-semibold mb-1">
+              Gmail / Email
+            </p>
+            <p data-i18n="gmailCta" class="text-blue-400">Abrir correo</p>
+          </a>
+        </div>
+
+        <hr class="border-gray-700 my-8" />
+
+        <p class="text-center text-gray-400">
+          <strong class="text-gray-200">{ownerName}</strong>
+        </p>
+        <p data-i18n="footer" class="text-center text-gray-500 text-sm mt-2">
+          Si prefieres, puedes llamarme directamente para coordinar la entrega.
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script is:inline>
+  const i18n = {
+    es: {
+      title: "Has encontrado algo mío",
+      intro:
+        "Gracias por escanear este QR. Si has encontrado mi equipaje u objeto personal, por favor contacta conmigo usando cualquiera de estas opciones:",
+      emailLabel: "Correo",
+      phoneLabel: "Teléfono",
+      whatsappCta: "Enviar mensaje",
+      gmailLabel: "Gmail / Email",
+      gmailCta: "Abrir correo",
+      footer:
+        "Si prefieres, puedes llamarme directamente para coordinar la entrega.",
+    },
+    en: {
+      title: "You found something of mine",
+      intro:
+        "Thanks for scanning this QR code. If you found my luggage or personal item, please contact me using any of these options:",
+      emailLabel: "Email",
+      phoneLabel: "Phone",
+      whatsappCta: "Send message",
+      gmailLabel: "Gmail / Email",
+      gmailCta: "Open email",
+      footer: "If you prefer, you can call me directly to arrange the return.",
+    },
+  };
+
+  function setLanguage(lang) {
+    const dict = i18n[lang] || i18n.es;
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (key && dict[key]) el.textContent = dict[key];
+    });
+
+    document.querySelectorAll("[data-lang-btn]").forEach((btn) => {
+      const isActive = btn.getAttribute("data-lang-btn") === lang;
+      btn.classList.toggle("border-blue-500", isActive);
+      btn.classList.toggle("text-blue-400", isActive);
+      btn.classList.toggle("border-gray-600", !isActive);
+      btn.classList.toggle("text-gray-300", !isActive);
+    });
+
+    localStorage.setItem("findMyLuggageLangNadia", lang);
+  }
+
+  const savedLang = localStorage.getItem("findMyLuggageLangNadia");
+  const browserLang = navigator.language?.toLowerCase().startsWith("en")
+    ? "en"
+    : "es";
+  setLanguage(savedLang || browserLang);
+
+  document.querySelectorAll("[data-lang-btn]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lang = btn.getAttribute("data-lang-btn");
+      setLanguage(lang);
+    });
+  });
+</script>
